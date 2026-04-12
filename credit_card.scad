@@ -1,7 +1,13 @@
 card_number = "1586 4811 6500 5419";
 card_holder_name = "ERIK ERIKSSON";
 
+// What part to render, for multi-material prints
+select_part = "all"; // [all, card, stripe, text]
 
+// Configure the stripe to take one print layer
+stripe_d = 0.2;
+
+/* [Details] */
 w = 85.60;
 h = 53.98;
 d = 0.76;
@@ -9,9 +15,6 @@ corner_radius = 3.0;
 
 stripe_offset = 5.7;
 stripe_h = 9.5;
-// Just so it takes one print layer
-stripe_d = 0.1;
-///cube([w, h, d], true);
 
 font_name = "Verdana";
 text_d = 0.4;
@@ -22,9 +25,14 @@ card_number_offset = 35;
 card_holder_h = 3;
 card_holder_offset = 47;
 
-//square([w, h], true);
+module filter(part_name) {
+    if (select_part == "all" || part_name == select_part) {
+        children();
+    }
+}
 
 // Card
+filter("card")
 color("lightblue")
 difference() {
     // Card shape
@@ -48,33 +56,36 @@ difference() {
 }
 
 // Stripe
+filter("stripe")
 stripe();
 
 module stripe() {
-//color("black") 
+    color("black") 
     translate([
     0,
     (h-stripe_h)/2 - stripe_offset,
     0
     ])
-linear_extrude(stripe_d)
-square([w, stripe_h], true);
+    linear_extrude(stripe_d)
+    square([w, stripe_h], true);
 }
 
-// Card number
-color("gray")
-translate([
-    -w/2 + text_left_offset,
-    h/2 - card_number_offset,
-    d])
-linear_extrude(text_d)
-text(card_number, card_number_h, font_name, halign = "left");
+filter("text") {
+    // Card number
+    color("gray")
+    translate([
+        -w/2 + text_left_offset,
+        h/2 - card_number_offset,
+        d])
+    linear_extrude(text_d)
+    text(card_number, card_number_h, font_name, halign = "left");
 
-// Card holder
-color("gray")
-translate([
-    -w/2 + text_left_offset,
-    h/2 - card_holder_offset,
-    d])
-linear_extrude(text_d)
-text(card_holder_name, card_holder_h, font_name, halign = "left");
+    // Card holder
+    color("gray")
+    translate([
+        -w/2 + text_left_offset,
+        h/2 - card_holder_offset,
+        d])
+    linear_extrude(text_d)
+    text(card_holder_name, card_holder_h, font_name, halign = "left");
+}
