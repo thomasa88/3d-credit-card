@@ -1,3 +1,6 @@
+// Copyright 2026 Thomas Axelsson
+// SPDX: CC-BY-SA-4.0
+
 card_number = "1586 4811 6500 5419";
 card_holder_name = "ERIK ERIKSSON";
 // Realistic card thickness is 0.76 mm, but as a toy 1.8 mm or more might be better.
