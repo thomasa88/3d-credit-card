@@ -1,5 +1,7 @@
 card_number = "1586 4811 6500 5419";
 card_holder_name = "ERIK ERIKSSON";
+// Realistic card thickness is 0.76 mm, but as a toy 1.8 mm or more might be better.
+card_thickness = 0.76;
 
 // What part to render, for multi-material prints
 select_part = "all"; // [all, card, stripe, text]
@@ -10,11 +12,11 @@ stripe_d = 0.2;
 /* [Details] */
 w = 85.60;
 h = 53.98;
-d = 0.76;
+d = card_thickness;
 corner_radius = 3.0;
 
-stripe_offset = 5.7;
-stripe_h = 9.5;
+stripe_offset = 4;
+stripe_h = 12;
 
 font_name = "Verdana";
 text_d = 0.4;
